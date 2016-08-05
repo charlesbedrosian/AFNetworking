@@ -234,6 +234,14 @@
  */
 - (instancetype)initWithRequest:(NSURLRequest *)urlRequest NS_DESIGNATED_INITIALIZER;
 
+/**
+ Initializes and returns a newly allocated operation object with a url connection configured with the specified url request and securityPolicy to use.
+ 
+ @param urlRequest The request object to be used by the operation connection.
+ @param securityPolicy The AFSecurityPolicy object to be used by the operation connection.
+ */
+- (instancetype)initWithRequest:(NSURLRequest *)urlRequest securityPolicy:(AFSecurityPolicy *)securityPolicy;
+
 ///----------------------------------
 /// @name Pausing / Resuming Requests
 ///----------------------------------

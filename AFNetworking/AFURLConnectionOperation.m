@@ -182,6 +182,10 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 }
 
 - (instancetype)initWithRequest:(NSURLRequest *)urlRequest {
+    return [self initWithRequest:urlRequest securityPolicy:[AFSecurityPolicy defaultPolicy]];
+}
+
+- (instancetype)initWithRequest:(NSURLRequest *)urlRequest securityPolicy:(AFSecurityPolicy *)securityPolicy {
     NSParameterAssert(urlRequest);
 
     self = [super init];
@@ -200,7 +204,7 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 
     self.shouldUseCredentialStorage = YES;
 
-    self.securityPolicy = [AFSecurityPolicy defaultPolicy];
+    self.securityPolicy = securityPolicy;
 
     return self;
 }
