@@ -45,8 +45,11 @@
 - (instancetype)init {
     return [self initWithBaseURL:nil];
 }
-
 - (instancetype)initWithBaseURL:(NSURL *)url {
+    return [self initWithBaseURL:url securityPolicy:[AFSecurityPolicy defaultPolicy]];
+}
+
+- (instancetype)initWithBaseURL:(NSURL *)url securityPolicy:(AFSecurityPolicy *)securityPolicy {
     self = [super init];
     if (!self) {
         return nil;
@@ -62,7 +65,7 @@
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
     self.responseSerializer = [AFJSONResponseSerializer serializer];
 
-    self.securityPolicy = [AFSecurityPolicy defaultPolicy];
+    self.securityPolicy = securityPolicy;
 
     self.reachabilityManager = [AFNetworkReachabilityManager sharedManager];
 

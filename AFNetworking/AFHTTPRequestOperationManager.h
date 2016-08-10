@@ -194,6 +194,8 @@
  */
 - (instancetype)initWithBaseURL:(NSURL *)url NS_DESIGNATED_INITIALIZER;
 
+- (instancetype)initWithBaseURL:(NSURL *)url securityPolicy:(AFSecurityPolicy *)securityPolicy;
+
 ///---------------------------------------
 /// @name Managing HTTP Request Operations
 ///---------------------------------------
