@@ -115,6 +115,10 @@ typedef NS_ENUM(NSUInteger, AFSSLPinningMode) {
 - (BOOL)evaluateServerTrust:(SecTrustRef)serverTrust
                   forDomain:(NSString *)domain;
 
+
+//@property NSArray<NSString *>*leafCertificateCommonNamesToAccept;
+@property int numberOfAllowedUnmatchedCertificatesInChain;
+
 @end
 
 ///----------------

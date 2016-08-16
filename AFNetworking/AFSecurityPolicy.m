@@ -112,7 +112,31 @@ static NSArray * AFCertificateTrustChainForServerTrust(SecTrustRef serverTrust) 
 
     return [NSArray arrayWithArray:trustChain];
 }
+/*
+static NSArray * AFCertificateTrustChainForServerTrustExcluding(SecTrustRef serverTrust, NSArray<NSString *>* commonNames) {
+    CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
+    NSMutableArray *trustChain = [NSMutableArray arrayWithCapacity:(NSUInteger)certificateCount];
+    
+    for (CFIndex i = 0; i < certificateCount; i++) {
+        SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
 
+        CFStringRef summary = SecCertificateCopySubjectSummary(certificate);
+        NSString *summaryString = (NSString *)CFBridgingRelease(summary);
+        BOOL found = NO;
+        for (NSString *commonName in commonNames) {
+            if ([commonName isEqualToString:summaryString]) {
+                found = YES;
+                break;
+            }
+        }
+        if (!found) {
+            [trustChain addObject:(__bridge_transfer NSData *)SecCertificateCopyData(certificate)];
+        }
+    }
+    
+    return [NSArray arrayWithArray:trustChain];
+}
+*/
 static NSArray * AFPublicKeyTrustChainForServerTrust(SecTrustRef serverTrust) {
     SecPolicyRef policy = SecPolicyCreateBasicX509();
     CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
@@ -290,8 +314,8 @@ static NSArray * AFPublicKeyTrustChainForServerTrust(SecTrustRef serverTrust) {
                     trustedCertificateCount++;
                 }
             }
-
-            return trustedCertificateCount == [serverCertificates count];
+            int requiredTrustCount = ([serverCertificates count] - self.numberOfAllowedUnmatchedCertificatesInChain);
+            return trustedCertificateCount >= requiredTrustCount;
         }
         case AFSSLPinningModePublicKey: {
             NSUInteger trustedPublicKeyCount = 0;
